@@ -19,8 +19,8 @@
 		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
 		<link rel="stylesheet" type="text/css" href="../css/top.css" />
 		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
-		<script type="text/javascript" src="../js/distpicker.data.js"></script>
-		<script type="text/javascript" src="../js/distpicker.js"></script>
+		<!--<script type="text/javascript" src="../js/distpicker.data.js"></script>
+		<script type="text/javascript" src="../js/distpicker.js"></script> -->
 	</head>
 
 	<body>
@@ -148,46 +148,46 @@
 							</div>
 							<div class="address_content" data-toggle="distpicker">
 								<div class="form-group">
-									<label class="col-md-2 control-label"><span class="txtred">*</span>省/直辖市：</label>
+									<label class="col-md-2 control-label"><span class="txtred">*</span>Province：</label>
 									<div class="col-md-3">
-										<select id="province-list" name="provinceCode" class="form-control" data-province="---- 选择省 ----"></select>
+										<select id="province-list" name="provinceCode" class="form-control" data-province="---- Select Province ----"></select>
 									</div>
-									<label class="col-md-2 control-label"><span class="txtred">*</span>城市：</label>
+									<label class="col-md-2 control-label"><span class="txtred">*</span>City：</label>
 									<div class="col-md-3">
-										<select id="city-list" name="cityCode" class="form-control" data-city="---- 选择市 ----"></select>
+										<select id="city-list" name="cityCode" class="form-control" data-city="---- Select City ----"></select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-2 control-label"><span class="txtred">*</span>区县：</label>
+									<label class="col-md-2 control-label"><span class="txtred">*</span>District：</label>
 									<div class="col-md-3">
-										<select id="area-list" name="areaCode" class="form-control" data-district="---- 选择区 ----"></select>
+										<select id="area-list" name="areaCode" class="form-control" data-district="---- Select District ----"></select>
 									</div>
-									<label class="col-md-2 control-label">邮政编码：</label>
+									<label class="col-md-2 control-label">Postcode：</label>
 									<div class="col-md-3">
-										<input name="zip" type="text" class="form-control" placeholder="请输入邮政编码">
+										<input name="zip" type="text" class="form-control" placeholder="Please enter postcode">
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-2 control-label"><span class="txtred">*</span>详细地址：</label>
+								<label class="col-md-2 control-label"><span class="txtred">*</span>Address：</label>
 								<div class="col-md-8">
-									<textarea name="address" class="form-control" rows="3" placeholder="输入详细的收货地址，小区名称、门牌号等"></textarea>
+									<textarea name="address" class="form-control" rows="3" placeholder="Please enter detailed address"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-2 control-label"><span class="txtred">*</span>手机：</label>
+								<label class="col-md-2 control-label"><span class="txtred">*</span>Phone：</label>
 								<div class="col-md-3">
-									<input name="phone" type="text" class="form-control" placeholder="请输入手机号码">
+									<input name="phone" type="text" class="form-control" placeholder="Enter phone number">
 								</div>
-								<label class="col-md-2 control-label">固话：</label>
+								<label class="col-md-2 control-label">Telephone：</label>
 								<div class="col-md-3">
-									<input name="tel" type="text" class="form-control" placeholder="请输入固定电话号码">
+									<input name="tel" type="text" class="form-control" placeholder="Enter telephone number">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-2 control-label">地址类型：</label>
+								<label class="col-md-2 control-label">Address type：</label>
 								<div class="col-md-8">
-									<input name="tag" type="text" class="form-control" placeholder="请输入地址类型，如：家、公司或者学校">
+									<input name="tag" type="text" class="form-control" placeholder="Please enter address type">
 								</div>
 							</div>
 							<div class="form-group">
@@ -279,6 +279,107 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
+			var defaultOption = "<option value='0'> ---Please select--- </option>";
+			$(document).ready(function(){
+				showProvinceList();
+				$("#province-list").append(defaultOption);
+				$("#city-list").append(defaultOption);
+				$("#area-list").append(defaultOption);
+			});
+
+			function showProvinceList(){
+				$.ajax({
+					url:"/districts",
+					type:"POST",
+					data: "parent=86",
+					dataType:"JSON",
+					success:function(json){
+						if (json.state == 200) {
+							let list = json.data;
+							for (let i = 0; i < list.length; i++){
+								let opt =
+								"<option value='"+list[i].code+"'>"+list[i].name+"</option>";
+								$("#province-list").append(opt);
+							}
+                    	} else {
+                        	alert("Province info loading failed.");
+						}
+					},
+					error: function(xhr){
+						alert("Unknown problem has occurred." + xhr.status);
+
+					}
+				});
+			}
+
+			$("#province-list").change(function(){
+				var parent = $("#province-list").val();
+
+				$("#city-list").empty();
+				$("#area-list").empty();
+
+				$("#city-list").append(defaultOption);
+				$("#area-list").append(defaultOption);
+
+				if(parent==0){
+					return;
+				}
+				$.ajax({
+					url:"/districts",
+					type:"POST",
+					data:"parent="+parent,
+					dataType:"JSON",
+					success:function(json){
+						if (json.state == 200) {
+							let list = json.data;
+							for (let i = 0; i < list.length; i++){
+								let opt =
+								"<option value='"+list[i].code+"'>"+list[i].name+"</option>";
+								$("#city-list").append(opt);
+							}
+                    	} else {
+                        	alert("City info loading failed.");
+						}
+					},
+					error: function(xhr){
+						alert("Unknown problem has occurred." + xhr.status);
+
+					}
+				});
+			});
+
+			$("#city-list").change(function(){
+				var parent = $("#city-list").val();
+				$("#area-list").empty();
+				$("#area-list").append(defaultOption);
+
+				if(parent==0){
+					return;
+				}
+				$.ajax({
+					url:"/districts",
+					type:"POST",
+					data:"parent="+parent,
+					dataType:"JSON",
+					success:function(json){
+						if (json.state == 200) {
+							let list = json.data;
+							for (let i = 0; i < list.length; i++){
+								let opt =
+								"<option value='"+list[i].code+"'>"+list[i].name+"</option>";
+								$("#area-list").append(opt);
+							}
+                    	} else {
+                        	alert("Area info loading failed.");
+						}
+					},
+					error: function(xhr){
+						alert("Unknown problem has occurred." + xhr.status);
+
+					}
+				});
+			});
+
 			$("#btn-add-new-address").click(function(){
 				$.ajax({
 					url:"/addresses/add_new_address",
