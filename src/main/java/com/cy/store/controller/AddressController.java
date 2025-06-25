@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequestMapping("addresses")
 @RestController
 public class AddressController extends BaseController{
@@ -21,5 +23,12 @@ public class AddressController extends BaseController{
                 getUsernameFromSession(session),
                 address);
         return new JsonResult<>(OK);
+    }
+
+    @RequestMapping({"","/"})
+    public JsonResult<List<Address>> getByUid (HttpSession session){
+        Integer uid = getUidFromSession(session);
+        List<Address> data = addressService.getByUid(uid);
+        return new JsonResult<>(OK,data);
     }
 }

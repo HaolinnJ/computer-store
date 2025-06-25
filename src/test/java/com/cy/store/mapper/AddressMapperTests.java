@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 
 // @SpringBootTest: 标注当前类是一个测试类，不会随同项目一块打包发送
 @SpringBootTest
@@ -37,5 +39,11 @@ public class AddressMapperTests {
     public void countByUid(){
         Integer rows = addressMapper.countByUid(6);
         System.out.println(rows);
+    }
+
+    @Test
+    public void findByUid(){
+        List<Address> list = addressMapper.findByUid(6);
+        System.out.println(list);
     }
 }
