@@ -35,6 +35,9 @@ public class BaseController {
         } else if (e instanceof AccessDeniedException){
             result.setState(4005);
             result.setMessage("Invalid request.");
+        } else if (e instanceof ProductNotFoundException){
+            result.setState(4006);
+            result.setMessage("Product does not exist.");
         } else if (e instanceof InsertException){
             result.setState(5000);
             result.setMessage("Registration failed.");
