@@ -31,5 +31,10 @@ public class AddressServiceTests {
         address.setName("my friend");
         addressService.addNewAddress(6,"Administrator",address);
     }
+
+    @Test
+    public void setDefault(){
+        addressService.setDefault(8,6,"Administrator");
+    }
 }
 

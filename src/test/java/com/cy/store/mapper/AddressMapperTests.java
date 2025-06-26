@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -46,4 +47,20 @@ public class AddressMapperTests {
         List<Address> list = addressMapper.findByUid(6);
         System.out.println(list);
     }
+
+    @Test
+    public void findByAid() {
+        System.err.println(addressMapper.findByAid(8));
+    }
+
+    @Test
+    public void updateNonDefault() {
+        System.out.println(addressMapper.updateNonDefault(6));//有几条数据影响行数就输出几
+    }
+
+    @Test
+    public void updateDefaultByAid() {
+        addressMapper.updateDefaultByAid(7,"Administrator",new Date());
+    }
+
 }

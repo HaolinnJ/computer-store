@@ -29,6 +29,12 @@ public class BaseController {
         } else if (e instanceof AddressCountLimitException){
             result.setState(4003);
             result.setMessage("Address count exceeds limit.");
+        } else if (e instanceof AddressNotFoundException){
+            result.setState(4004);
+            result.setMessage("Address does not exist.");
+        } else if (e instanceof AccessDeniedException){
+            result.setState(4005);
+            result.setMessage("Invalid request.");
         } else if (e instanceof InsertException){
             result.setState(5000);
             result.setMessage("Registration failed.");
