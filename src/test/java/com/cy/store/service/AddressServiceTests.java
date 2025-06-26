@@ -36,5 +36,10 @@ public class AddressServiceTests {
     public void setDefault(){
         addressService.setDefault(8,6,"Administrator");
     }
+
+    @Test
+    public void delete(){
+        addressService.delete(2,6,"Administrator");
+    }
 }
 

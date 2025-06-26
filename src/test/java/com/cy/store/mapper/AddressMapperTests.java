@@ -50,7 +50,7 @@ public class AddressMapperTests {
 
     @Test
     public void findByAid() {
-        System.err.println(addressMapper.findByAid(8));
+        System.err.println(addressMapper.findByAid(3));
     }
 
     @Test
@@ -63,4 +63,14 @@ public class AddressMapperTests {
         addressMapper.updateDefaultByAid(7,"Administrator",new Date());
     }
 
+    @Test
+    public void deleteByAid() {
+        addressMapper.deleteByAid(1);
+    }
+
+    @Test
+    public void findLastModified() {
+        System.out.println(addressMapper.findLastModified(6));
+    }
 }
+

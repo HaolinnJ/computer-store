@@ -97,4 +97,36 @@ public class AddressServiceImpl implements IAddressService {
             throw new UpdateException("Unknown problem has occurred during update.");
         }
     }
+
+    @Override
+    public void delete(Integer aid, Integer uid, String username) {
+        Address result = addressMapper.findByAid(aid);
+        if (result==null){
+            throw new AddressNotFoundException("Address does not exist.");
+        }
+
+        if(!result.getUid().equals(uid)){
+            throw new AccessDeniedException("Invalid request.");
+        }
+
+        Integer rows = addressMapper.deleteByAid(aid);
+        if(rows !=1){
+            throw new DeleteException("Unknown problem has occurred during delete.");
+        }
+
+        if(result.getIsDefault()==0){
+            return;
+        }
+        Integer count = addressMapper.countByUid(uid);
+        if(count ==0){
+            return;
+        }
+
+        Address address = addressMapper.findLastModified(uid);
+
+        rows =addressMapper.updateDefaultByAid(address.getAid(),username, new Date());
+        if(rows != 1){
+            throw new UpdateException("Unknown problem has occurred during update");
+        }
+    }
 }

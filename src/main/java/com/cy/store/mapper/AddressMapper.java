@@ -47,4 +47,18 @@ public interface AddressMapper {
             String modifiedUser,
             Date modifiedTime
     );
+
+    /**
+     * 根据收货地址id删除收货地址数据
+     * @param aid
+     * @return
+     */
+    Integer deleteByAid(Integer aid);
+
+    /**
+     * 如果删除了default地址则需要找到用户最后一次被修改的收货地址数据并设为默认
+     * @param uid
+     * @return
+     */
+    Address findLastModified(Integer uid);
 }
