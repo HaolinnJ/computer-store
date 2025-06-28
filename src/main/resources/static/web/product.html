@@ -317,6 +317,29 @@
                     }
                 });
             });
+
+				$("#btn-add-to-cart").click(function() {
+				$.ajax({
+					url: "/carts/add_to_cart",
+					type: "POST",
+					data: {
+						"pid": id,
+						"amount": $("#num").val()
+					},
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							alert("Added to cart.");
+						} else {
+							alert("Failed to add to cart/" + json.message);
+						}
+					},
+					error: function(xhr) {
+						alert("Your session has expired. Please log in again." + xhr.status);
+						location.href = "login.html";
+					}
+				});
+			});
 		</script>
 	</body>
 
