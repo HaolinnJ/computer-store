@@ -1,8 +1,10 @@
 package com.cy.store.mapper;
 
 import com.cy.store.entity.Cart;
+import com.cy.store.vo.CartVO;
 
 import java.util.Date;
+import java.util.List;
 
 public interface CartMapper {
     /**
@@ -35,4 +37,18 @@ public interface CartMapper {
     Cart findByUidAndPid(
             Integer uid,
             Integer pid);
+
+    /**
+     * 查询某用户的购物车数据
+     * @param uid
+     * @return 购物车列表
+     */
+    List<CartVO> findVOByUid(Integer uid);
+
+    /**
+     * 用cid查找购物车数据
+     * @param cid
+     * @return
+     */
+    Cart findByCid(Integer cid);
 }

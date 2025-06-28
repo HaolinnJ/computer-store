@@ -45,5 +45,15 @@ public class CartMapperTests {
     public void findByUidAndPid(){
         System.out.println(cartMapper.findByUidAndPid(11,10000001));
     }
+
+    @Test
+    public void findVOByUid(){
+        System.out.println(cartMapper.findVOByUid(6));
+    }
+
+    @Test
+    public void findByCid(){
+        cartMapper.findByCid(4);
+    }
 }
 
