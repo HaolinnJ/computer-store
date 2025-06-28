@@ -51,4 +51,11 @@ public interface CartMapper {
      * @return
      */
     Cart findByCid(Integer cid);
+
+    /**
+     * 通过cid删除数据
+     * @param cid
+     * @return
+     */
+    Integer deleteByCid(Integer cid);
 }

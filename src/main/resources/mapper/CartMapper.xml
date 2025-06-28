@@ -51,4 +51,7 @@
         SELECT * FROM t_cart WHERE cid=#{cid}
     </select>
 
+    <delete id="deleteByCid">
+        DELETE FROM t_cart WHERE cid=#{cid}
+    </delete>
 </mapper>

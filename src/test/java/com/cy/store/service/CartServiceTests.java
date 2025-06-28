@@ -25,5 +25,10 @@ public class CartServiceTests {
     public void addToCart(){
         cartService.addToCart(11,10000001,5,"Administrator");
     }
+
+    @Test
+    public void delCartItem(){
+        cartService.delCartItem(6,6);
+    }
 }
 

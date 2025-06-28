@@ -55,5 +55,10 @@ public class CartMapperTests {
     public void findByCid(){
         cartMapper.findByCid(4);
     }
+
+    @Test
+    public void deleteByCid(){
+        cartMapper.deleteByCid(4);
+    }
 }
 

@@ -282,7 +282,7 @@
 							'</td>\n' +
 							'<td><span id="goodsCast#{cid}">#{totalPrice}</span></td>\n' +
 							'<td>\n' +
-							'<input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="Delete" />\n' +
+							'<input type="button" onclick="delCartItem(#{cid})" class="cart-del btn btn-default btn-xs" value="Delete" />\n' +
 							'</td>\n' +
 							'</tr>';
 						tr = tr.replaceAll(/#{cid}/g, list[i].cid);
@@ -340,34 +340,45 @@
 					dataType: "JSON",
 					success: function (json) {
 						if (json.state == 200) {
+							if (json.data == null) {
+								console.log("Product count is 0, reloading cart list...");
+								showCartList();
+							} else {
 							$("#goodsCount"+cid).val(json.data);//字符串+整数cid后结果为字符串
 
-							//更新该商品总价
-							/*
-										html()方法:
-										不传参:是获取某个标签内部的内容(文本或标签)
-										传参:将参数放到标签里面替换掉该标签原有内容
-										* */
 							var price = $("#goodsPrice"+cid).html();
 							var totalPrice = price * json.data;
 
 							//将商品总价更新到控件中
 							$("#goodsCast"+cid).html(totalPrice);
+						}
 						} else {
-							alert("Add product failed."+json.message);
+							alert("Reduce product failed."+json.message);
 						}
 					},
 					error: function (xhr) {
-						alert("Unknown problem has occurred during adding product."+xhr.message);
+						alert("Unknown problem has occurred during reducing product."+xhr.message);
 					}
 				});
 			}
-			$(function() {
-				//返回链接
-				$(".link-account").click(function() {
-					location.href = "orderConfirm.html";
-				})
-			})
+			function delCartItem(cid) {
+				$.ajax({
+					url: "/carts/"+cid+"/delete",
+					type: "POST",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							showCartList();
+						} else {
+							alert("delete product failed."+json.message);
+						}
+					},
+					error: function (xhr) {
+						alert("Unknown problem has occurred during deleting product."+xhr.message);
+					}
+				});
+			}
+
 		</script>
 	</body>
 

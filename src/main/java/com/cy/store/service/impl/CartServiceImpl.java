@@ -95,10 +95,29 @@ public class CartServiceImpl implements ICartService {
         }
 
         Integer num = result.getNum()-1;
+        if(num==0){
+            cartMapper.deleteByCid(cid);
+            return null;
+        }
         Integer rows = cartMapper.updateNumByCid(cid, num,username,new Date());
         if (rows!=1){
             throw new UpdateException("Unknown problem has occurred during update.");
         }
         return num;
+    }
+
+    @Override
+    public void delCartItem(Integer cid, Integer uid) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null){
+            throw new CartNotFoundException("Product in cart not found.");
+        }
+        if (!result.getUid().equals(uid)){
+            throw new AccessDeniedException("Invalid request.");
+        }
+        Integer rows = cartMapper.deleteByCid(cid);
+        if (rows!=1){
+            throw new UpdateException("Unknown problem has occurred during delete.");
+        }
     }
 }

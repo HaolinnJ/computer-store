@@ -40,4 +40,10 @@ public interface ICartService {
      * @return
      */
     Integer reduceNum(Integer cid, Integer uid, String username);
+
+    /**
+     * 删除购物车中指定cid的商品
+     * @param cid
+     */
+    void delCartItem(Integer cid, Integer uid);
 }

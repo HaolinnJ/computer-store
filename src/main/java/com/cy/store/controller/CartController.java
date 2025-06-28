@@ -47,4 +47,10 @@ public class CartController extends BaseController {
         Integer data = cartService.reduceNum(cid,getUidFromSession(session),getUsernameFromSession(session));
         return new JsonResult<Integer> (OK,data);
     }
+
+    @RequestMapping("{cid}/delete")
+    public JsonResult<Void> delCartItem(@PathVariable("cid") Integer cid, HttpSession session){
+        cartService.delCartItem(cid, getUidFromSession(session));
+        return new JsonResult<Void>(OK);
+    }
 }
