@@ -116,9 +116,6 @@
 								<p>选择收货地址：</p>
 							</label>
 							<select name="aid" id="address-list" class="form-control">
-								<option>八戒&nbsp;&nbsp;&nbsp;家&nbsp;&nbsp;&nbsp;北京市房山区高老庄3排6号&nbsp;&nbsp;&nbsp;1380***1234</option>
-								<option>八戒&nbsp;&nbsp;&nbsp;公司&nbsp;&nbsp;&nbsp;北京市海淀区中关村中路1号1001室&nbsp;&nbsp;&nbsp;1380***1234</option>
-								<option>八戒&nbsp;&nbsp;&nbsp;宿舍&nbsp;&nbsp;&nbsp;北京市海淀区永丰镇30号&nbsp;&nbsp;&nbsp;1380***1234</option>
 							</select>
 						</div>
 						<div class="panel panel-primary">
@@ -318,6 +315,26 @@
 					}
 				});
 			}
+			$("#btn-create-order").click(function() {
+				var aid = $("#address-list").val();
+				var cids = location.search.substr(1);
+				$.ajax({
+					url: "/orders/create",
+					data: "aid=" + aid + "&" + cids,
+					type: "GET",
+					dataType: "JSON",
+					success: function(json) {
+						if (json.state == 200) {
+							location.href = "payment.html";
+						} else {
+							alert("Order creation failed." + json.message);
+						}
+					},
+					error: function(xhr) {
+						alert("Unknown problem has occurred during creating order." + xhr.status);
+					}
+				});
+			});
 		</script>
 	</body>
 

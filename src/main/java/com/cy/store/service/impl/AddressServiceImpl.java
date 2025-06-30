@@ -129,4 +129,23 @@ public class AddressServiceImpl implements IAddressService {
             throw new UpdateException("Unknown problem has occurred during update");
         }
     }
+
+    @Override
+    public Address getByAid(Integer aid, Integer uid) {
+        Address address = addressMapper.findByAid(aid);
+        if(address == null){
+            throw new AddressNotFoundException("Address does not exist.");
+        }
+        if(!address.getUid().equals(uid)){
+            throw new AccessDeniedException("Invalid request.");
+        }
+        address.setProvinceCode(null);
+        address.setCityCode(null);
+        address.setAreaCode(null);
+        address.setCreatedUser(null);
+        address.setCreatedTime(null);
+        address.setModifiedUser(null);
+        address.setModifiedTime(null);
+        return address;
+    }
 }
