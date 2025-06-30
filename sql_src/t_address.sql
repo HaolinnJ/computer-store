@@ -1,0 +1,22 @@
+CREATE TABLE t_address (
+	aid INT AUTO_INCREMENT,
+	uid INT,
+	name VARCHAR(20),
+	province_name VARCHAR(15),
+	province_code CHAR(6),
+	city_name VARCHAR(15),
+	city_code CHAR(6),
+	area_name VARCHAR(15),
+	area_code CHAR(6),
+	zip CHAR(6),
+	address VARCHAR(50),
+	phone VARCHAR(20),
+	tel VARCHAR(20),
+	tag VARCHAR(20),
+	is_default INT,
+	created_user VARCHAR(20),
+	created_time DATETIME,
+	modified_user VARCHAR(20),
+	modified_time DATETIME,
+	PRIMARY KEY (aid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
