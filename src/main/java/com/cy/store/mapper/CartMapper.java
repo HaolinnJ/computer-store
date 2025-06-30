@@ -58,4 +58,11 @@ public interface CartMapper {
      * @return
      */
     Integer deleteByCid(Integer cid);
+
+    /**
+     * 通过查询cid来返回选中的购物车中的商品
+     * @param cids
+     * @return
+     */
+    List<CartVO> findVOByCids (Integer[] cids);
 }

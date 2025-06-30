@@ -54,4 +54,26 @@
     <delete id="deleteByCid">
         DELETE FROM t_cart WHERE cid=#{cid}
     </delete>
+
+    <select id="findVOByCids" resultType="com.cy.store.vo.CartVO">
+        SELECT
+            cid,
+            uid,
+            pid,
+            t_cart.price,
+            t_cart.num,
+            title,
+            t_product.price as realPrice,
+            image
+        FROM t_cart
+        LEFT JOIN t_product on t_cart.pid = t_product.id
+        WHERE
+            cid IN (
+            <foreach collection="array" item="cid" separator=",">
+                #{cid}
+            </foreach>
+            )
+        ORDER BY
+            t_cart.created_time DESC
+    </select>
 </mapper>

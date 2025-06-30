@@ -2,6 +2,7 @@ package com.cy.store.mapper;
 
 import com.cy.store.entity.Address;
 import com.cy.store.entity.Cart;
+import com.cy.store.vo.CartVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,15 @@ public class CartMapperTests {
     @Test
     public void deleteByCid(){
         cartMapper.deleteByCid(4);
+    }
+
+    @Test
+    public void findVOByCids(){
+        Integer[] cids = {1,2,3,4,13,14};
+        List<CartVO> list = cartMapper.findVOByCids(cids);
+        for(CartVO item :list){
+            System.out.println(item);
+        }
     }
 }
 

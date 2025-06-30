@@ -46,4 +46,12 @@ public interface ICartService {
      * @param cid
      */
     void delCartItem(Integer cid, Integer uid);
+
+    /**
+     * 通过cids的数组查找购物车中符合的商品信息
+     * @param cids
+     * @param uid
+     * @return
+     */
+    List<CartVO> getVOByCids(Integer[] cids, Integer uid);
 }

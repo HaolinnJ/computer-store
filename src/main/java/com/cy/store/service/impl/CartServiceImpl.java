@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -119,5 +120,20 @@ public class CartServiceImpl implements ICartService {
         if (rows!=1){
             throw new UpdateException("Unknown problem has occurred during delete.");
         }
+    }
+
+    @Override
+    public List<CartVO> getVOByCids(Integer[] cids, Integer uid) {
+        List<CartVO> list = cartMapper.findVOByCids(cids);
+        // 迭代器遍历：
+        Iterator<CartVO> it = list.iterator();
+        while(it.hasNext()){
+            CartVO cart = it.next();
+
+            if(!cart.getUid().equals(uid)){
+                it.remove();
+            }
+        }
+        return list;
     }
 }
